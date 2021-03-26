@@ -1,0 +1,25 @@
+*Input List;
+Data inputlist;
+input nama $ umur kode; *Use $ to declare string VAR;
+datalines; *Datalines: similar to cards; Data separated by space;
+Andi 33 100
+Bayu 35 200
+Cahyo 34 300
+;
+run;
+
+*Input kolom
+data inputcolumn;
+input nama $ 1-20 umur 21-23 kode 24-26; *VAR nama use col 1-20, Umur Col 21-23,.;
+cards; *Write nilai Umur in its slot, 21-23;
+Andi Permana 33 100
+Bayu Nugroho 35 200
+Cahyo Anggoro 34 300
+;
+run;
+
+*Import txt
+data Infile;
+infile 'D:\SAS_Infile.txt'; *Import .txt file from Drive D;
+input Fruit $ Qty Price; *Declare Variable name;
+run;
