@@ -1,0 +1,42 @@
+data desa;
+input Desa$ Kecamatan$ Penduduk_laki Penduduk_Perempuan Jumlah_keluarga Keluarga_PraKS;
+cards;
+A1	A	6471	5949	2483	419
+A2	A	5767	4700	2438	433
+A3	A	5441	5068	2322	241
+B1	B	3037	2911	1568	330
+B2	B	2179	2021	1083	301
+B3	B	6470	6477	6469	306
+B4	B	6465	6466	6465	307
+C1	C	5643	5640	5642	214
+C2	C	5634	5676	5640	267
+C3	C	5621	5645	5678	144
+D1	D	5632	5689	5690	316
+D2	D	4195	4876	4121	 30
+;
+run;
+
+/*NONSQL*/
+proc summary data=desa nway;
+class Kecamatan;
+Var Penduduk_laki Penduduk_Perempuan Jumlah_keluarga Keluarga_PraKS;
+output out=kecamatan (drop=_type_ _freq_)
+SUM(Penduduk_laki)=jumL
+SUM(Penduduk_Perempuan)=JumP
+SUM(Jumlah_keluarga)=JumKel
+SUM(Keluarga_PraKS)=JumKS
+;
+run;
+
+/*SQL*/
+proc sql;
+create table kecsql as
+select Kecamatan,
+SUM(Penduduk_laki) as jumL,
+SUM(Penduduk_Perempuan) as JumP,
+SUM(Jumlah_keluarga) as JumKel,
+SUM(Keluarga_PraKS) as JumKS
+from desa
+group by Kecamatan
+;
+run;
